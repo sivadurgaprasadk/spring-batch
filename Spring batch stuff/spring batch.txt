@@ -1,0 +1,77 @@
+Job1
+	Step1,Step2...
+		Item1,Item2... =  divide group of items = chunks
+		
+TaskletSet
+		
+features:
+1.Transaction management
+2.Chunk based processing
+3.Declarative I/O
+4.Start/Restart/Skip Capabilities
+5.Web administration interface
+6.Based on the spring framework
+7.Scheduling time based processing
+
+
+
+Ways of execution:
+------------------
+1.Multi threaded step : execute each chunk with single thread
+2.Parallel steps : execute multiple steps independently --> single JVM only
+3.Remote chunking : not preferred
+4.Remote Partitioning : partitioner
+
+
+
+Partitioner : It know how many records in store. Based on that it decide, one step how many records has to process. it return that metadata in terms of map<String, ExcecutionContext> object.
+
+Partition Handler : It take care of execution of slave steps.
+
+Job : job checks is this instance is restatable, validations, parameters. It execute(JobExecution job). For every job one ExecutionContext will create.
+
+JobInstance : Representing uniquily identifying job. JobInstance can be restarted multiple times in case of execution failure and it's lifecycle ends with first successful execution.
+
+JobExecution: It represents a complete job.
+
+JobParameters : They can be used for identification or even as reference data during the run.
+
+ExecutionContext : 
+
+	stepExecutionContext : the framework periodically persists the ExecutionContext at commit points.to store its state in case a fatal error occurs during the run, or even if the power goes out.
+	
+	jobExecutionContext : whereas the ExecutionContext scoped to the Job will be saved in between every Step execution.
+	
+JobRepository : It provides CRUD operations for JobLauncher, Job, and Step implementations.
+
+JobLauncher : JobLauncher represents a simple interface for launching a Job with a given set of JobParameters.It is expected that implementations will obtain a valid JobExecution from the JobRepository and execute the Job.
+
+ItemReader
+ItemWriter
+ItemProcessor
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
